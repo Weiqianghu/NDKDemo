@@ -15,6 +15,65 @@ Java_com_huweiqiang_ndkdemo_MainActivity_sayHello(JNIEnv *env, jobject instance,
     return env->NewStringUTF(buff);
 }
 
+JNIEXPORT void JNICALL
+Java_com_huweiqiang_ndkdemo_MainActivity_callJavaStaticMethod(JNIEnv *env, jclass type) {
+    jclass clazz = NULL;
+    jstring str_arg = NULL;
+    jmethodID mid_static_method;
+    clazz = env->FindClass("com/huweiqiang/ndkdemo/ClassMethod");
+    if (clazz == NULL) {
+        return;
+    }
+
+    mid_static_method = env->GetStaticMethodID(clazz, "callStaticMethod", "(Ljava/lang/String;I)V");
+    if (mid_static_method == NULL) {
+        printf("找不到callStaticMethod这个静态方法。");
+        return;
+    }
+
+    str_arg = env->NewStringUTF("我是静态方法");
+    env->CallStaticVoidMethod(clazz, mid_static_method, str_arg, 100);
+
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(str_arg);
+}
+
+JNIEXPORT void JNICALL
+Java_com_huweiqiang_ndkdemo_MainActivity_callJavaInstaceMethod(JNIEnv *env, jclass type) {
+    jclass clazz = NULL;
+    jstring str_arg = NULL;
+    jmethodID mid_instance_method;
+    jobject jobj = NULL;
+    jmethodID mid_constructor_method;
+
+    clazz = env->FindClass("com/huweiqiang/ndkdemo/ClassMethod");
+    if (clazz == NULL) {
+        return;
+    }
+
+    mid_constructor_method = env->GetMethodID(clazz, "<init>", "()V");
+    if (mid_constructor_method == NULL) {
+        return;
+    }
+
+    mid_instance_method = env->GetMethodID(clazz, "callInstanceMethod", "(Ljava/lang/String;I)V");
+    if (mid_instance_method == NULL) {
+        return;
+    }
+
+    jobj = env->NewObject(clazz, mid_constructor_method);
+    if (jobj == NULL) {
+        return;
+    }
+
+    str_arg = env->NewStringUTF("我是实例方法");
+    env->CallVoidMethod(jobj, mid_instance_method, str_arg, 200);
+
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(jobj);
+    env->DeleteLocalRef(str_arg);
+}
+
 JNIEXPORT jobjectArray JNICALL
 Java_com_huweiqiang_ndkdemo_MainActivity_initInt2DArray(JNIEnv *env, jobject instance, jint size) {
     jobjectArray result;

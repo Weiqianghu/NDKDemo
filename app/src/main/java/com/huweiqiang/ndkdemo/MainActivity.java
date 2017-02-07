@@ -46,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 System.out.format("arr[%d][%d] = %d\n", i, j, array[i][j]);
             }
         }
+
+        findViewById(R.id.btn_call_java_static_method).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callJavaStaticMethod();
+            }
+        });
+
+        findViewById(R.id.btn_call_java_instance_method).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callJavaInstaceMethod();
+            }
+        });
     }
 
     public native String stringFromJNI();
@@ -55,4 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public native int sumArray(int[] array);
 
     private native int[][] initInt2DArray(int size);
+
+    public static native void callJavaStaticMethod();
+
+    public static native void callJavaInstaceMethod();
 }

@@ -38,4 +38,18 @@
         android:layout_below="@id/btn_sum"
         android:text="The sum is :"/>
 
+    <Button
+        android:id="@+id/btn_call_java_static_method"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_sum"
+        android:text="call java static method"/>
+
+    <Button
+        android:id="@+id/btn_call_java_instance_method"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_call_java_static_method"
+        android:text="call java instance method"/>
+
 </RelativeLayout>
